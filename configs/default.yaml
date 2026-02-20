@@ -1,0 +1,126 @@
+# Hierarchical Demand Reconciliation Configuration
+
+# Data Configuration
+data:
+  dataset_path: "data/m5-forecasting-accuracy"
+  calendar_path: "data/m5-forecasting-accuracy/calendar.csv"
+  prices_path: "data/m5-forecasting-accuracy/sell_prices.csv"
+  sales_path: "data/m5-forecasting-accuracy/sales_train_evaluation.csv"
+
+  # Data preprocessing
+  sequence_length: 28
+  prediction_length: 28
+  validation_split: 0.2
+  test_split: 0.1
+
+  # Hierarchy levels (M5 specific)
+  hierarchy_levels:
+    - "item_id"
+    - "dept_id"
+    - "cat_id"
+    - "store_id"
+    - "state_id"
+    - "total"
+
+# Model Configuration
+model:
+  name: "HierarchicalReconciliationTransformer"
+
+  # Base forecasting model
+  forecasting_model:
+    hidden_size: 256
+    num_layers: 4
+    num_heads: 8
+    dropout: 0.1
+    activation: "relu"
+
+  # Anomaly detection module
+  anomaly_detector:
+    window_size: 7
+    threshold_method: "isolation_forest"
+    contamination: 0.1
+    feature_dims: 64
+
+  # Reconciliation module
+  reconciliation:
+    method: "weighted_least_squares"
+    coherence_weight: 1.0
+    anomaly_weight: 0.5
+    attention_dim: 128
+    temporal_context: 14
+
+  # Loss function weights
+  loss_weights:
+    forecast_loss: 1.0
+    reconciliation_loss: 0.3
+    anomaly_loss: 0.2
+    coherence_loss: 0.1
+
+# Training Configuration
+training:
+  batch_size: 64
+  max_epochs: 100
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  patience: 15
+
+  # Optimizer
+  optimizer: "adamw"
+  scheduler: "cosine"
+  warmup_epochs: 10
+
+  # Regularization
+  gradient_clip_val: 1.0
+  label_smoothing: 0.1
+
+  # Checkpointing
+  save_top_k: 3
+  monitor: "val_wrmsse"
+  mode: "min"
+
+# Evaluation Configuration
+evaluation:
+  metrics:
+    - "wrmsse"
+    - "mase"
+    - "smape"
+    - "mape"
+    - "rmse"
+    - "mae"
+
+  # Target metrics for this project
+  target_metrics:
+    wrmsse: 0.52
+    reconciliation_coherence_error: 0.05
+    anomaly_precision_at_k: 0.8
+    forecast_improvement_post_anomaly_pct: 15.0
+    coverage_95pi: 0.93
+
+  # Evaluation settings
+  prediction_intervals: [0.5, 0.67, 0.95]
+  anomaly_detection_k: 20
+
+# System Configuration
+system:
+  device: "auto"  # auto, cpu, cuda
+  num_workers: 4
+  pin_memory: true
+
+  # Reproducibility
+  seed: 42
+  deterministic: false
+
+  # Logging
+  log_level: "INFO"
+  log_every_n_steps: 50
+
+  # MLflow
+  experiment_name: "hierarchical_demand_reconciliation"
+  tracking_uri: "file:./mlruns"
+
+# Paths
+paths:
+  data_dir: "data"
+  models_dir: "checkpoints"
+  results_dir: "results"
+  logs_dir: "logs"

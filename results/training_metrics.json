@@ -1,0 +1,7 @@
+{
+  "test_loss": 0.0,
+  "final_test_rmse": 0.0,
+  "final_train_loss": 12.9133369336113,
+  "final_val_loss": 15.390409025652655,
+  "best_val_loss": 15.308592303045865
+}
