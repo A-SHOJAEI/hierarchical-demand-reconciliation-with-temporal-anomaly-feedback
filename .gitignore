@@ -22,6 +22,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+*.pyc
 
 # Virtual environments
 .env
@@ -48,10 +49,6 @@ mlruns/
 
 # Data files
 data/
-*.csv
-*.parquet
-*.h5
-*.hdf5
 
 # Model files
 *.pkl
@@ -61,6 +58,7 @@ data/
 *.onnx
 *.bin
 *.ckpt
+checkpoints/*.pth
 
 # Logs
 logs/
@@ -81,11 +79,6 @@ coverage.xml
 
 # OS
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
 
 # Temporary files
@@ -93,7 +86,7 @@ Thumbs.db
 *.temp
 *.bak
 
-# Checkpoints
-checkpoints/*.pt
-checkpoints/*.pth
-!checkpoints/.gitkeep
+# Results - include specific files
+!results/
+!results/results.json
+!results/training_metrics.json

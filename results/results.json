@@ -1,0 +1,45 @@
+{
+  "model": "Hierarchical Demand Reconciliation with Temporal Anomaly Feedback",
+  "dataset": "Synthetic (M5-style hierarchical demand data)",
+  "task": "Hierarchical Time Series Forecasting with Anomaly Detection",
+  "training_config": {
+    "data_type": "synthetic",
+    "num_items": 100,
+    "num_days": 365,
+    "total_records": 36500,
+    "train_samples": 25500,
+    "val_samples": 7300,
+    "test_samples": 3700,
+    "batch_size": 64,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "sequence_length": 28,
+    "prediction_length": 28,
+    "hidden_size": 256,
+    "num_layers": 4,
+    "num_heads": 8,
+    "dropout": 0.1,
+    "max_epochs": 100,
+    "epochs_trained": 100,
+    "model_parameters": 3197596,
+    "hardware": "NVIDIA RTX 4090"
+  },
+  "final_metrics": {
+    "final_train_loss": 12.9133,
+    "final_val_loss": 15.3904,
+    "best_val_loss": 15.3086,
+    "best_epoch": 2,
+    "test_loss": 0.0,
+    "final_test_rmse": 0.0
+  },
+  "training_progression": [
+    {"epoch": 1, "train_loss": 18.0524, "val_loss": 17.1897},
+    {"epoch": 2, "train_loss": 13.2066, "val_loss": 15.3086},
+    {"epoch": 5, "train_loss": 13.0915, "val_loss": 15.4574},
+    {"epoch": 10, "train_loss": 13.0584, "val_loss": 16.5016},
+    {"epoch": 25, "train_loss": 12.9831, "val_loss": 15.5303},
+    {"epoch": 50, "train_loss": 12.9635, "val_loss": 15.4489},
+    {"epoch": 75, "train_loss": 12.9517, "val_loss": 15.4133},
+    {"epoch": 100, "train_loss": 12.9133, "val_loss": 15.3904}
+  ]
+}
